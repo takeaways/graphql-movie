@@ -11,8 +11,16 @@
 ## Graphql Server 생성하기
 
 - schema
+
   - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
   - 오직 그래프 큐엘을 위한 것입니다.
   - query : 데이터 베이스에서 데이터를 받을때.
+
+    ```graphql
+    type Query {
+      name: String!
+    }
+    ```
+
   - resover : 요청 전문에 대한 데이터 처리 함수.
   - mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
