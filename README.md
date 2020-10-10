@@ -65,29 +65,35 @@ server.start(() => {
     }
         ```
 
-    - schema
-
-      - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
-      - 오직 그래프 큐엘을 위한 것입니다.
-      - query : 데이터 베이스에서 데이터를 받을때.
-
-        ```gql
-        type Movie {
-          id: Int!
-          name: String!
-          score: Int
-        }
-
-        type Query {
-          movies: [Movie]!
-          movie(id: Int!): Movie
-        }
-
-        type Mutation {
-          addMovie(name: String!, score: Int!): Movie!
-          removeMovie(id: Int!): Boolean!
-        }
     ````
+
+  - schema
+
+    - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
+    - 오직 그래프 큐엘을 위한 것입니다.
+    - query : 데이터 베이스에서 데이터를 받을때.
+
+      ```gql
+      type Movie {
+        id: Int!
+        name: String!
+        score: Int
+      }
+
+      type Query {
+        movies: [Movie]!
+        movie(id: Int!): Movie
+      }
+
+      type Mutation {
+        addMovie(name: String!, score: Int!): Movie!
+        removeMovie(id: Int!): Boolean!
+      }
+      ```
+
+    ```
+
+    ```
 
   - resolver : 요청 전문에 대한 데이터 처리 함수.
 
@@ -145,3 +151,9 @@ server.start(() => {
 
 > tip
 > graphql query에 파라미터를 적으려면 이름을 적어서 넘겨주어야 한다.
+
+## Apollo Client
+
+- 장점
+  - cache 요청한 정도를 캐쉬 해서 다시 요청하지 않는다.
+    - redux를 이용해서 이 기능을 사용하고자 하면 스스로 구현을 해줘야 한다.
