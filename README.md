@@ -22,29 +22,72 @@ server.start(() => {
 });
 ```
 
-- schema
+- db
 
-  - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
-  - 오직 그래프 큐엘을 위한 것입니다.
-  - query : 데이터 베이스에서 데이터를 받을때.
+  - movie data base
 
-    ```gql
-    type Movie {
-      id: Int!
-      name: String!
-      score: Int
+    ````gql
+    let db = [
+        {
+            id:1,
+            name:"어벤져스1",
+            score:0
+        },
+        {
+            id:2,
+            name:"어벤져스2",
+            score:3
+        },
+        {
+            id:3,
+            name:"어벤져스3",
+            score:4
+        }
+    ]
+
+    export const getMovieById =({id})=> db.find(m=>m.id===id);
+    export const getMovies = ()=>db
+    export const delMovie=({id}) =>{
+        const movies = db.filter(m=>m.id!==id)
+        if(movies.length > 0){
+            db = movies
+        }
+        return movies.length > 0 ? true : false
     }
-
-    type Query {
-      movies: [Movie]!
-      movie(id: Int!): Movie
+    export const addMovie= ({name,score})=>{
+        const newMovie = {
+            id:db.length+1,
+            name,
+            score,
+        }
+        db.push(newMovie)
+        return newMovie
     }
+        ```
 
-    type Mutation {
-      addMovie(name: String!, score: Int!): Movie!
-      removeMovie(id: Int!): Boolean!
-    }
-    ```
+    - schema
+
+      - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
+      - 오직 그래프 큐엘을 위한 것입니다.
+      - query : 데이터 베이스에서 데이터를 받을때.
+
+        ```gql
+        type Movie {
+          id: Int!
+          name: String!
+          score: Int
+        }
+
+        type Query {
+          movies: [Movie]!
+          movie(id: Int!): Movie
+        }
+
+        type Mutation {
+          addMovie(name: String!, score: Int!): Movie!
+          removeMovie(id: Int!): Boolean!
+        }
+    ````
 
   - resolver : 요청 전문에 대한 데이터 처리 함수.
 
