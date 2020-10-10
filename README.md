@@ -142,3 +142,6 @@ server.start(() => {
       removeMovie(id: Int!): Boolean!
     }
     ```
+
+> tip
+> graphql query에 파라미터를 적으려면 이름을 적어서 넘겨주어야 한다.
