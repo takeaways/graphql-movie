@@ -155,5 +155,32 @@ server.start(() => {
 ## Apollo Client
 
 - 장점
+
   - cache 요청한 정도를 캐쉬 해서 다시 요청하지 않는다.
     - redux를 이용해서 이 기능을 사용하고자 하면 스스로 구현을 해줘야 한다.
+
+- 사용법
+  - gql을 이용하여 쿼리문을 작성한다.
+  - 변수를 사용하기 위해서는 아폴로 만을 위한 이름을 지어서 변수를 전달해 주어야 한다.
+  ```gql
+  const GET_MOVIE = gql`
+    # 변수 선언은 $표시를 이용해서 전달하며 서버에서 정의된 타입의 값일 적어 주어야 한다.
+    # 그러나 프론트에서는 서버의 타입을 알 수 있는 부분이고 정의 하는게 아니라 그냥 타입을 # 적어 주기만 하면 된다. 해당 타입은 playground 문서에서 확인이 가능한다.
+    # input의 타입을 같게 맞추어 변수로 넘겨 주게 되면 사용하는 것이 용의 해진다.
+    # 이름의 변수로 받은 것은 resolver 2번째 인자로 전달 받을 수 있으며 객체의 형태로 전달 되기 때문에 디스트럭쳐링을 해줘야 합니다.
+    query getMovie($id: Int!) {
+      movie(id: $id) {
+        id
+        title
+        medium_cover_image
+        language
+        rating
+        description_intro
+      }
+      suggestions(id: $id) {
+        id
+        medium_cover_image
+      }
+    }
+  `;
+  ```
