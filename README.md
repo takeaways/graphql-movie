@@ -17,10 +17,24 @@
   - query : 데이터 베이스에서 데이터를 받을때.
 
     ```graphql
+    //graphql/schema.graphql
     type Query {
       name: String!
     }
     ```
 
   - resover : 요청 전문에 대한 데이터 처리 함수.
-  - mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
+    ```javascript
+    // graphql/resolvers.js
+    const resolvers = {
+      Query: {
+        name: () => "Geonil Jang",
+      },
+    };
+    ```
+
+export default resolvers
+
+    ```
+
+- mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
