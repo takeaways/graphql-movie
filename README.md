@@ -161,8 +161,10 @@ server.start(() => {
   - 하나의 end-point만을 사용하며 resolver를 잘 작성하기만 하면 내부의 로직이 어떻게 바뀌던 동일한 값을 전달 받을 수 있음을 확신할 수 있게된다.
 
 - 사용법
+
   - gql을 이용하여 쿼리문을 작성한다.
   - 변수를 사용하기 위해서는 아폴로 만을 위한 이름을 지어서 변수를 전달해 주어야 한다.
+
   ```gql
   const GET_MOVIE = gql`
     # 변수 선언은 $표시를 이용해서 전달하며 서버에서 정의된 타입의 값일 적어 주어야 한다.
@@ -184,4 +186,48 @@ server.start(() => {
       }
     }
   `;
+  ```
+
+  - mutation 하기위해서는 다음을 이용한다.
+    - query or mutation 각각에 resolver이 하나씩 매칭이 된다고 볼 수 있겠다.
+
+  ```javascript
+  // server
+  import { gql } from "@apollo/client";
+  const UPDATE_NAME = gql`
+    # 중요포이트는 gql을 작성하고!
+    # variables 객체를 잘 전달하는 것이다.
+    # 업데이트가 진행되고 리턴 받을 값을 작성 한다.
+    type Person {
+      id: Int!
+      name: String!
+      age: Int!
+    }
+
+    type Mutation{
+      updatePerson(id:Int!,$name:String!):Person
+    }
+  `;
+
+  const resolvers = {
+    Query: {},
+    Mutation: {
+      updatePerson:(_, args)=>{//처리로직
+        const {id, name} = args
+        ....
+      }
+    },
+  };
+
+  //client
+  const UPDATE_NAME = gql`
+    mutation UpdatePersonName($id: Int!, $name: String!) {
+        updatePerson(id: $id, name: $name) {
+          id
+          name
+          age
+        }
+      }
+  `
+
   ```
