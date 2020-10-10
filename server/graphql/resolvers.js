@@ -1,14 +1,8 @@
-import {addMovie, delMovie, getMovieById, getMovies}from "../db/movie"
+import { getMovies }from "../db/yts"
 
-const resolvers ={
+const resolvers = {
     Query:{
-        movie: (_,args)=>getMovieById(args),
-        movies:()=>getMovies(),
-     
-    },
-    Mutation:{
-        removeMovie:(_,args) => delMovie(args),
-        addMovie:(_,args) => addMovie(args)
+        movies: (_, args) => getMovies(args),
     }
 }
 
