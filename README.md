@@ -10,6 +10,18 @@
 
 ## Graphql Server 생성하기
 
+```javascript
+import { GraphQLServer } from "graphql-yoga";
+import resolvers from "./graphql/resolvers";
+const server = new GraphQLServer({
+  typeDefs: "graphql/schema.graphql",
+  resolvers,
+});
+server.start(() => {
+  console.log("Graphql Server Running");
+});
+```
+
 - schema
 
   - 사용자에게 보내거나 사용자로 부터 받을 data에 대한 설명
@@ -35,4 +47,4 @@
     export default resolvers;
     ```
 
-    - mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
+  - mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
