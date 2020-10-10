@@ -1,9 +1,11 @@
-import { getMovies }from "../db/yts"
+import { getMovies, getMovie, getSuggestions } from "../db/yts";
 
 const resolvers = {
-    Query:{
-        movies: (_, args) => getMovies(args),
-    }
-}
+  Query: {
+    movies: (_, { rating, limit }) => getMovies(limit, rating),
+    movie: (_, { id }) => getMovie(id),
+    suggestions: (_, { id }) => getSuggestions(id)
+  }
+};
 
-export default resolvers
+export default resolvers;
