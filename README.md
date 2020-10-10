@@ -11,7 +11,7 @@
 ## Graphql Server 생성하기
 
 ```javascript
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer } from "graphql-yoga"; //graphql server를 만드기 위한 패키지
 import resolvers from "./graphql/resolvers";
 const server = new GraphQLServer({
   typeDefs: "graphql/schema.graphql",
@@ -28,10 +28,17 @@ server.start(() => {
   - 오직 그래프 큐엘을 위한 것입니다.
   - query : 데이터 베이스에서 데이터를 받을때.
 
-    ```graphql
-    //graphql/schema.graphql
-    type Query {
+    ```gql
+    type Person {
+      id: Int!
       name: String!
+      age: Int!
+      gender: String
+    }
+
+    type Query {
+      people: [Person]!
+      person(id: Int!): Person
     }
     ```
 
@@ -39,11 +46,29 @@ server.start(() => {
 
     ```javascript
     // graphql/resolvers.js
+    const geonil = {
+      id: 1,
+      name: "Geonil Jang",
+      age: 29,
+      gender: "male",
+    };
+    const may = {
+      id: 2,
+      name: "May",
+      age: 27,
+      gender: "female",
+    };
+
+    const people = [geonil, may];
+
+    const getById = ({ id }) => people.find((person) => person.id === id);
     const resolvers = {
       Query: {
-        name: () => "Geonil Jang",
+        person: (_, args) => getById(args),
+        people: () => people,
       },
     };
+
     export default resolvers;
     ```
 
