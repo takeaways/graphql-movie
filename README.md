@@ -29,16 +29,20 @@ server.start(() => {
   - query : 데이터 베이스에서 데이터를 받을때.
 
     ```gql
-    type Person {
+    type Movie {
       id: Int!
       name: String!
-      age: Int!
-      gender: String
+      score: Int
     }
 
     type Query {
-      people: [Person]!
-      person(id: Int!): Person
+      movies: [Movie]!
+      movie(id: Int!): Movie
+    }
+
+    type Mutation {
+      addMovie(name: String!, score: Int!): Movie!
+      removeMovie(id: Int!): Boolean!
     }
     ```
 
@@ -67,9 +71,31 @@ server.start(() => {
         person: (_, args) => getById(args),
         people: () => people,
       },
+      Mutation: {
+        removeMovie: (_, args) => delMovie(args),
+        addMovie: (_, args) => addMovie(args),
+      },
     };
 
     export default resolvers;
     ```
 
   - mutation : 데이터 베이스 정보를 바꾸는 일을 할 때.
+
+    ```gql
+    type Movie {
+      id: Int!
+      name: String!
+      score: Int
+    }
+
+    type Query {
+      movies: [Movie]!
+      movie(id: Int!): Movie
+    }
+
+    type Mutation {
+      addMovie(name: String!, score: Int!): Movie!
+      removeMovie(id: Int!): Boolean!
+    }
+    ```
